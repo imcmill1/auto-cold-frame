@@ -17,9 +17,9 @@
 #define sensorPin A1
 #define ledRed 7
 #define ledBlue 8
-#define actuatorInterval 1000
+#define actuatorInterval 2500
 
-//enumerating two sets of state variables, one for movem
+//enumerating state variables
 
 enum positionStates {
  deg0,
@@ -62,7 +62,15 @@ void loop() {
   //printing result to console
   Serial.print(temp); Serial.println(" degrees F\n");     
   //at top of loop, if alertFlag is raised, print out alert
-  if (alertFlag) Serial.println("Alert! Cannot control temperature!");
+  if (alertFlag) {
+    Serial.println("Alert! Cannot control temperature!"); 
+    digitalWrite(ledBlue, LOW);
+    digitalWrite(ledRed, HIGH);
+  }
+  else {
+    digitalWrite(ledBlue, HIGH);
+    digitalWrite(ledRed, LOW);
+  }
                                                                  
   switch (lidState) {
     case deg0:
@@ -100,6 +108,7 @@ void loop() {
         stopAct();
         //set lidState to deg30
         lidState = deg30;
+        delay(1000);
         break;
       }
       //else if temp goes lower than ambient, goto deg0
@@ -112,6 +121,7 @@ void loop() {
         stopAct();
         //set lidState to deg0
         lidState = deg0;
+        delay(1000);
         break;
       }
       //else remain
@@ -128,6 +138,7 @@ void loop() {
         stopAct();
         //set lidState to deg45
         lidState = deg45;
+        delay(1000);
         break;
       }
       //else if temp goes lower than ambient, goto deg15
@@ -140,6 +151,7 @@ void loop() {
         stopAct();
         //set lidState to deg15
         lidState = deg15;
+        delay(1000);
         break;
       }
       //else remain
@@ -151,11 +163,12 @@ void loop() {
         //set actuator to extend
         extendAct();
         //delay for 5 sec (duration will need adjusting)
-        delay(5000);
+        delay(actuatorInterval);
         //set actuator to stop
         stopAct();
         //set lidState to deg60
         lidState = deg60;
+        delay(1000);
         break;
       }
       //else if temp goes lower than ambient, goto deg30
@@ -163,11 +176,12 @@ void loop() {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
-        delay(5000);
+        delay(actuatorInterval);
         //set actuator to stop
         stopAct();
         //set lidState to deg30
         lidState = deg30;
+        delay(1000);
         break;
       }
       //else remain
@@ -184,11 +198,12 @@ void loop() {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
-        delay(5000);
+        delay(actuatorInterval);
         //set actuator to stop
         stopAct();
         //set lidState to deg45
         lidState = deg45;
+        delay(1000);
         break;
       }
       //else remain
