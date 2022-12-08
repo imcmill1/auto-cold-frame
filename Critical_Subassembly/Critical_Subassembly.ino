@@ -18,6 +18,8 @@
 #define ledRed 7
 #define ledBlue 8
 #define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
+#define upperTemp 73
+#define lowerTemp 68
 
 //enumerating state variables
 
@@ -74,7 +76,7 @@ void loop() {
   switch (lidState) {
     case deg0:
       //if temp goes higher than ambient, goto deg15
-      if (temp > 73) {
+      if (temp > upperTemp) {
         //set actuator to extend
         extendAct();
         //delay for 5 sec (duration will need adjusting)
@@ -86,7 +88,7 @@ void loop() {
         break;
       }
       //else if temp goes lower than ambient, remain closed, throw alert flag
-      else if (temp < 68) {
+      else if (temp < lowerTemp) {
         alertFlag = true;
         break;
       }
@@ -98,7 +100,7 @@ void loop() {
 
     case deg15:
       //if temp goes higher than ambient, goto deg30
-      if (temp > 73) {
+      if (temp > upperTemp) {
         //set actuator to extend
         extendAct();
         //delay for 5 sec (duration will need adjusting)
@@ -111,7 +113,7 @@ void loop() {
         break;
       }
       //else if temp goes lower than ambient, goto deg0
-      else if (temp < 68) {
+      else if (temp < lowerTemp) {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
@@ -128,7 +130,7 @@ void loop() {
       
     case deg30:
       //if temp goes higher than ambient, goto deg45
-      if (temp > 73) {
+      if (temp > upperTemp) {
         //set actuator to extend
         extendAct();
         //delay for 5 sec (duration will need adjusting)
@@ -141,7 +143,7 @@ void loop() {
         break;
       }
       //else if temp goes lower than ambient, goto deg15
-      else if (temp < 68) {
+      else if (temp < lowerTemp) {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
@@ -158,7 +160,7 @@ void loop() {
       
     case deg45:
       //if temp goes higher than ambient, goto deg60
-      if (temp > 73) {
+      if (temp > upperTemp) {
         //set actuator to extend
         extendAct();
         //delay for 5 sec (duration will need adjusting)
@@ -171,7 +173,7 @@ void loop() {
         break;
       }
       //else if temp goes lower than ambient, goto deg30
-      else if (temp < 68) {
+      else if (temp < lowerTemp) {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
@@ -188,12 +190,12 @@ void loop() {
       
     case deg60:
       //if temp goes higher than ambient, remain, throw alert flag
-      if (temp > 73) {
+      if (temp > upperTemp) {
         alertFlag = true;
         break;
       }
       //else if temp goes lower than ambient, goto deg45
-      else if (temp < 68) {
+      else if (temp < lowerTemp) {
         //set actuator to retract
         retractAct();
         //delay for 5 sec (duration will need adjusting)
