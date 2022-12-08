@@ -17,7 +17,7 @@
 #define sensorPin A1
 #define ledRed 7
 #define ledBlue 8
-#define actuatorInterval 2500
+#define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
 
 //enumerating state variables
 
@@ -46,11 +46,10 @@ void setup() {
   delay(40000);
   stopAct();
   lidState = deg0;
-
 }
 
 void loop() {
-   //read data from transistor
+  //read data from transistor
   int reading = analogRead(sensorPin);
   // turn signal to voltage
   float voltage = reading * 5.0;        
@@ -212,6 +211,8 @@ void loop() {
         break;
       }
   }
+
+  delay(1000);
 }
 
 
