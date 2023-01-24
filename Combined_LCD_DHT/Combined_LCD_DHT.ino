@@ -7,7 +7,7 @@
 DHT dht(DHTPIN, DHTTYPE);  // Initialize DHT sensor for normal 16mhz Arduino
 
 // LCD Var Setup
-const int rs = 12, en = 11, d4 = 3, d5 = 4, d6 = 5, d7 = 6;
+const int rs = 14, en = 13, d4 = 12, d5 = 11, d6 = 10, d7 = 9;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 //DHT Var Setup

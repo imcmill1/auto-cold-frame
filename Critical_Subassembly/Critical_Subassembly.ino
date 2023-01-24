@@ -11,12 +11,12 @@
 
 //preprocessor directives for our global constants
 #define ACTUATORSPEED 200
-#define actuatorEnable 11
-#define driverInput1 12
-#define driverInput2 13
+#define actuatorEnable 0
+#define driverInput1 1
+#define driverInput2 2
 #define sensorPin A1
-#define ledRed 7
-#define ledBlue 8
+#define ledRed 3
+#define ledBlue 4
 #define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
 #define upperTemp 73
 #define lowerTemp 67
