@@ -19,7 +19,7 @@
 #define ledBlue 8
 #define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
 #define upperTemp 73
-#define lowerTemp 68
+#define lowerTemp 67
 
 //enumerating state variables
 
