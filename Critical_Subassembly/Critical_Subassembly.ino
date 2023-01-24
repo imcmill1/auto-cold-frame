@@ -237,3 +237,4 @@ void stopAct() {
 void actuatorConfig() {
   analogWrite(actuatorEnable, ACTUATORSPEED);
 }
+
