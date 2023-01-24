@@ -3,7 +3,7 @@
    sensors with the linear actuator to demonstrate our 
    critical subassembly.
 
-   Author: Ian McMillan
+   Author: Ian McMillan & Aidan Mizwicki
    Version: 0.5
    Last Modified: 12/6/2022
 */
@@ -237,4 +237,3 @@ void stopAct() {
 void actuatorConfig() {
   analogWrite(actuatorEnable, ACTUATORSPEED);
 }
-
