@@ -1,13 +1,16 @@
-/* Critical Subassembly Code Demo Program 
+/* Milestone 1 Demo Program 
    Purpose: An Arduino program that integrates temperature
    sensors with the linear actuator to demonstrate our 
    critical subassembly.
 
    Author: Ian McMillan & Aidan Mizwicki
    Version: 0.5
-   Last Modified: 12/6/2022
+   Last Modified: 1/25/2023
 */
 
+// include the libraries for DHT and LCD:
+#include <LiquidCrystal.h>
+#include <DHT.h>
 
 //preprocessor directives for our global constants
 #define ACTUATORSPEED 200
@@ -20,6 +23,19 @@
 #define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
 #define upperTemp 73
 #define lowerTemp 67
+#define DHTPIN 5           // DHT Data Pin
+#define DHTTYPE DHT22      // DHT Type
+
+DHT dht(DHTPIN, DHTTYPE);  // Initialize DHT sensor for normal 16mhz Arduino
+
+
+// LCD Variable Setup
+const int rs = 14, en = 13, d4 = 12, d5 = 11, d6 = 10, d7 = 9;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+// DHT22 Varibale Setup
+float humidity;       //Humidity Value
+float temp;    //Temperature Value
 
 //enumerating state variables
 
@@ -36,7 +52,17 @@ enum positionStates lidState;
 bool alertFlag;
 
 void setup() {
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  
+  // set up the LCD's number of columns and rows:
+  // Print a startup message
+  lcd.begin(16, 2);
+  lcd.setCursor(0,0);
+  lcd.print("Starting...");
+  
+  // Start the DHT22
+  dht.begin();
+  
   alertFlag = false;
   
   pinMode(actuatorEnable, OUTPUT);
@@ -51,20 +77,26 @@ void setup() {
 }
 
 void loop() {
-  //read data from transistor
-  int reading = analogRead(sensorPin);
-  // turn signal to voltage
-  float voltage = reading * 5.0;        
-  voltage /= 1024.0; 
-  // converting from 10 mv per degree with 500 mV offset to degrees ((voltage - 500mV) times 100)
-  float temperatureC = (voltage - 0.5) * 100 ; 
-  //converting to Fahrenheit 
-  float temp = (temperatureC * 9.0 / 5.0) + 32.0;     
-  //printing result to console
-  Serial.print(temp); Serial.println(" degrees F\n");     
+  // Read temperature and humidity from the DHT22
+  // and store as humidity and temperature
+    humidity = dht.readHumidity();
+    temp = dht.readTemperature(true);
+    
+  //print the results to LCD Display
+  lcd.setCursor(0,0);
+  lcd.print("Humidity: ");
+  lcd.print(humidity);
+  lcd.print("%");
+  lcd.setCursor(0, 1);
+  lcd.print("Temp (F): ");
+  lcd.print(temp); 
+      
   //at top of loop, if alertFlag is raised, print out alert
   if (alertFlag) {
-    Serial.println("Alert! Cannot control temperature!"); 
+    lcd.setCursor(0,0);
+    lcd.print("Warning! Cant"); 
+    lcd.setCursor(0,1);
+    lcd.print(" Control Temp!");
     digitalWrite(ledBlue, LOW);
     digitalWrite(ledRed, HIGH);
   }
