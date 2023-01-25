@@ -15,13 +15,12 @@
 //preprocessor directives for our global constants
 #define ACTUATORSPEED 200
 #define actuatorEnable 0
-#define driverInput1 1
-#define driverInput2 2
-#define sensorPin A1
+#define driverInput1 6
+#define driverInput2 7
 #define ledRed 3
 #define ledBlue 4
 #define actuatorInterval 4175 //intervale is ~4.175sec/15 degree travel increments
-#define upperTemp 73
+#define upperTemp 74
 #define lowerTemp 67
 #define DHTPIN 5           // DHT Data Pin
 #define DHTTYPE DHT22      // DHT Type
@@ -30,12 +29,12 @@ DHT dht(DHTPIN, DHTTYPE);  // Initialize DHT sensor for normal 16mhz Arduino
 
 
 // LCD Variable Setup
-const int rs = 14, en = 13, d4 = 12, d5 = 11, d6 = 10, d7 = 9;
+const int rs = 14, en = 13, d4 = 2, d5 = 11, d6 = 10, d7 = 9;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // DHT22 Varibale Setup
 float humidity;       //Humidity Value
-float temp;    //Temperature Value
+float temp;           //Temperature Value
 
 //enumerating state variables
 
@@ -94,9 +93,9 @@ void loop() {
   //at top of loop, if alertFlag is raised, print out alert
   if (alertFlag) {
     lcd.setCursor(0,0);
-    lcd.print("Warning! Cant"); 
+    lcd.print("  Warning! Cant "); 
     lcd.setCursor(0,1);
-    lcd.print(" Control Temp!");
+    lcd.print("  Control Temp! ");
     digitalWrite(ledBlue, LOW);
     digitalWrite(ledRed, HIGH);
   }
