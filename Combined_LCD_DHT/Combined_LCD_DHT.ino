@@ -2,12 +2,12 @@
 #include <LiquidCrystal.h>
 #include <DHT.h>
 
-#define DHTPIN 2           // DHT Data Pin
+#define DHTPIN 5           // DHT Data Pin
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);  // Initialize DHT sensor for normal 16mhz Arduino
 
 // LCD Var Setup
-const int rs = 14, en = 13, d4 = 12, d5 = 11, d6 = 10, d7 = 9;
+const int rs = 14, en = 13, d4 = 2, d5 = 11, d6 = 10, d7 = 9;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 //DHT Var Setup
@@ -19,6 +19,9 @@ void setup() {
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
   // Print a message to the LCD.
+
+  digitalWrite(3, HIGH);
+  digitalWrite(4, HIGH);
   
   Serial.begin(9600);
   dht.begin();
